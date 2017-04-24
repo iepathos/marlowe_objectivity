@@ -3,7 +3,7 @@ dev:
   steps:
     - pip-install
     - internal/watch:
-        code: python app.py
+        code: python server.py
         reload: true
 
 # This is the build pipeline. Pipelines are the core of wercker
