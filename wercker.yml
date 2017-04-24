@@ -37,4 +37,4 @@ build:
     - script:
         name: python unit test
         code: |
-          nose
+          nosetests server_tests.py
