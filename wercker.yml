@@ -1,20 +1,10 @@
-# This references the default Python container from
-# the Docker Hub with the 2.7 tag:
-# https://registry.hub.docker.com/_/python/
-# If you want to use a slim Python container with
-# version 3.4.3 you would use: python:3.4-slim
-# If you want Google's container you would reference google/python
-# Read more about containers on our dev center
-# http://devcenter.wercker.com/docs/containers/index.html
 box: python:3.6.0
-# You can also use services such as databases. Read more on our dev center:
-# http://devcenter.wercker.com/docs/services/index.html
-# services:
-    # - postgres
-    # http://devcenter.wercker.com/docs/services/postgresql.html
-
-    # - mongo
-    # http://devcenter.wercker.com/docs/services/mongodb.html
+dev:
+  steps:
+    - pip-install
+    - internal/watch:
+        code: python app.py
+        reload: true
 
 # This is the build pipeline. Pipelines are the core of wercker
 # Read more about pipelines on our dev center
@@ -26,9 +16,9 @@ build:
   # http://devcenter.wercker.com/docs/steps/index.html
   steps:
     # A step that sets up the python virtual environment
-    - virtualenv:
-        name: setup virtual environment
-        install_wheel: false # Enable wheel to speed up builds (experimental)
+    # - virtualenv:
+    #     name: setup virtual environment
+    #     install_wheel: false # Enable wheel to speed up builds (experimental)
 
     # # Use this virtualenv step for python 3.2
     # - virtualenv
@@ -45,7 +35,6 @@ build:
     # A custom script step, name value is used in the UI
     # and the code value contains the command that get executed
     - script:
-        name: echo python information
+        name: python unit test
         code: |
-          echo "python version $(python --version) running"
-          echo "pip version $(pip --version) running"
+          nose
