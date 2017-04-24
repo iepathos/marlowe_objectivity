@@ -3,6 +3,8 @@ services:
   objectivity_api:
     build: .
     ports:
-     - "5000:5000"
+      - "5000:5000"
     volumes:
-     - .:/app
+      - .:/app
+    environment:
+      - DEBUG=True
