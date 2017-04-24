@@ -1,4 +1,4 @@
-FROM python:latest
+FROM python:3.6.0
 MAINTAINER Glen Baker <iepathos@gmail.com>
 
 RUN apt-get update -y
