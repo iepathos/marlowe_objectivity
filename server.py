@@ -13,8 +13,7 @@ app = Flask(__name__)
 def index():
     text = TextBlob(str(request.form.get('text')))
     objectivity = 1.0 - float(text.sentiment.subjectivity)
-    rounded = str(round(objectivity, 2)).split('.')[0] + '.' + str(round(objectivity, 2)).split('.')[1][:2]
-    data = {'objectivity': float(rounded)}
+    data = {'objectivity': round(objectivity, 2)}
     return jsonify(data)
 
 
