@@ -11,7 +11,7 @@ app = Flask(__name__)
 
 @app.route('/', methods=['POST'])
 def index():
-    text = TextBlob(str(request.form.get('text')))
+    text = TextBlob(str(request.form.get('text').encode("utf8")))
     objectivity = 1.0 - float(text.sentiment.subjectivity)
     data = {'objectivity': round(objectivity, 2)}
     return jsonify(data)
