@@ -4,9 +4,12 @@ import os
 import logging
 from textblob import TextBlob
 from flask import Flask, request, jsonify
+from flask_cors import CORS
+
 logger = logging.getLogger('marlowe.objectivity.server')
 
 app = Flask(__name__)
+CORS(app)
 
 
 @app.route('/', methods=['POST'])
