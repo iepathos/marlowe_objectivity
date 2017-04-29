@@ -14,9 +14,13 @@ CORS(app)
 
 @app.route('/', methods=['POST'])
 def index():
-    text = TextBlob(str(request.form.get('text').encode("utf8")))
-    objectivity = 1.0 - float(text.sentiment.subjectivity)
-    data = {'objectivity': round(objectivity, 2)}
+    text = request.form.get('text')
+    if text is not None:
+        text = TextBlob(str(request.form.get('text').encode("utf8")))
+        objectivity = 1.0 - float(text.sentiment.subjectivity)
+        data = {'objectivity': round(objectivity, 2)}
+    else:
+        data = {'objectivity': 1.0}
     return jsonify(data)
 
 
