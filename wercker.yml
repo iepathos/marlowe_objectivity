@@ -2,6 +2,12 @@ box: python:3.6.0
 dev:
   steps:
     - pip-install
+
+    - script:
+        name: nltk punkt install
+        code: |
+          python -m nltk.downloader punkt
+
     - internal/watch:
         code: python server.py
         reload: true
@@ -11,12 +17,11 @@ build:
     # A step that executes `pip install` command.
     - pip-install
 
-    # # This pip-install clears the local wheel cache
-    # - pip-install:
-    #     clean_wheel_dir: true
+    - script:
+        name: nltk punkt install
+        code: |
+          python -m nltk.downloader punkt
 
-    # A custom script step, name value is used in the UI
-    # and the code value contains the command that get executed
     - script:
         name: python unit test
         code: |
