@@ -5,6 +5,7 @@ import logging
 from textblob import TextBlob
 from flask import Flask, request, jsonify
 from flask_cors import CORS
+import nltk.data
 
 logger = logging.getLogger('marlowe.objectivity.server')
 
@@ -16,9 +17,19 @@ CORS(app)
 def index():
     text = request.form.get('text')
     if text is not None:
-        text = TextBlob(str(request.form.get('text').encode("utf8")))
-        objectivity = 1.0 - float(text.sentiment.subjectivity)
-        data = {'objectivity': round(objectivity, 2)}
+        # split into sentences, evaluate each sentence, then average the scores
+        # the classifier and dataset is by sentence so best to only give
+        # it one sentence at a time
+        text = str(request.form.get('text').encode("utf8"))
+        tokenizer = nltk.data.load('tokenizers/punkt/english.pickle')
+        sentences = tokenizer.tokenize(text)
+        scores = []
+        for s in sentences:
+            text = TextBlob(s)
+            objectivity = 1.0 - float(text.sentiment.subjectivity)
+            scores.append(objectivity)
+        average = sum(scores) / len(scores)
+        data = {'objectivity': round(average, 2)}
     else:
         data = {'objectivity': 1.0}
     return jsonify(data)
