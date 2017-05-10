@@ -20,7 +20,7 @@ def index():
         # split into sentences, evaluate each sentence, then average the scores
         # the classifier and dataset is by sentence so best to only give
         # it one sentence at a time
-        text = str(request.form.get('text').encode("utf8"))
+        text = str(request.form.get('text').encode("utf8")).strip()
         tokenizer = nltk.data.load('tokenizers/punkt/english.pickle')
         sentences = tokenizer.tokenize(text)
         scores = []
