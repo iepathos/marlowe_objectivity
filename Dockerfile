@@ -7,5 +7,8 @@ RUN apt-get install -y python-pip python-dev build-essential
 ADD . /app
 WORKDIR /app
 RUN pip install -r requirements.txt
+
+RUN python -m nltk.downloader punkt
+
 ENTRYPOINT ["python"]
 CMD ["server.py"]
